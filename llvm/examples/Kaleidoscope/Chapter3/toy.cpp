@@ -194,7 +194,16 @@ static int getNextToken() { return CurTok = gettok(); }
 
 /// BinopPrecedence - This holds the precedence for each binary operator that is
 /// defined.
-static std::map<char, int> BinopPrecedence;
+static std::map<char, int> BinopPrecedence = {
+  // Install standard binary operators.
+  // 1 is lowest precedence.
+  {'<', 10},
+  {'+', 20},
+  {'-', 20},
+  {'*', 40},
+  // highest.
+};
+
 
 /// GetTokPrecedence - Get the precedence of the pending binary operator token.
 static int GetTokPrecedence() {
@@ -598,13 +607,6 @@ static void MainLoop() {
 //===----------------------------------------------------------------------===//
 
 int main() {
-  // Install standard binary operators.
-  // 1 is lowest precedence.
-  BinopPrecedence['<'] = 10;
-  BinopPrecedence['+'] = 20;
-  BinopPrecedence['-'] = 20;
-  BinopPrecedence['*'] = 40; // highest.
-
   // Prime the first token.
   fprintf(stderr, "ready> ");
   getNextToken();
